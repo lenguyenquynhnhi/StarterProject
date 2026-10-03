@@ -33,6 +33,13 @@ Step '2/7  Preparing local configuration'
 if (-not (Test-Path '.env')) { Copy-Item '.env.example' '.env'; Ok 'Created .env from .env.example' }
 else { Ok '.env already exists, leaving it untouched' }
 
+Get-Content '.env' | Where-Object { $_ -match '^\s*([^#][^=]+)=(.*)$' } | ForEach-Object {
+    $name = $matches[1].Trim()
+    $value = $matches[2].Trim()
+    [System.Environment]::SetEnvironmentVariable($name, $value, 'Process')
+}
+Ok 'Loaded environment variables from .env'
+
 Step '3/7  Starting SQL Server'
 docker compose up -d
 if ($LASTEXITCODE -ne 0) { Die 'docker compose up failed.' }
@@ -57,9 +64,9 @@ if ($LASTEXITCODE -ne 0) { Die 'Build failed.' }
 Ok 'Build succeeded'
 
 Step '5/7  Preparing database migrations'
-dotnet ef --version *> $null
+dotnet ef --version > $null 2>&1
 if ($LASTEXITCODE -ne 0) {
-    dotnet tool install --global dotnet-ef *> $null
+    dotnet tool install --global dotnet-ef > $null 2>&1
     $env:PATH = "$env:PATH;$env:USERPROFILE\.dotnet\tools"
 }
 if (-not (Test-Path "$infra/Migrations")) {
