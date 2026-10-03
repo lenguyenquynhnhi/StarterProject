@@ -1,0 +1,28 @@
+# Build output
+bin/
+obj/
+artifacts/
+TestResults/
+coverage/
+*.trx
+*.coverage
+*.cobertura.xml
+
+# User-specific / IDE
+.vs/
+.vscode/*
+!.vscode/extensions.json
+.idea/
+*.user
+*.suo
+
+# Secrets and local configuration - never commit these
+.env
+*.env.local
+appsettings.Local.json
+*.pfx
+*.p12
+
+# OS noise
+.DS_Store
+Thumbs.db
