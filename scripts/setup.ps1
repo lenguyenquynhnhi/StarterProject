@@ -7,7 +7,7 @@
 [CmdletBinding()]
 param()
 
-$ErrorActionPreference = 'Stop'
+$ErrorActionPreference = 'Continue'
 $root = Split-Path -Parent $PSScriptRoot
 Set-Location $root
 
@@ -21,7 +21,7 @@ function Die($m)  { Write-Host "  FAIL $m" -ForegroundColor Red; exit 1 }
 Step '1/7  Checking prerequisites'
 if (-not (Get-Command dotnet -ErrorAction SilentlyContinue)) { Die '.NET SDK not found. Install .NET 8 SDK and re-run.' }
 if (-not (Get-Command docker -ErrorAction SilentlyContinue)) { Die 'Docker not found. Install Docker Desktop and re-run.' }
-docker info *> $null
+docker info > $null 2>&1
 if ($LASTEXITCODE -ne 0) { Die 'Docker is installed but not running. Start Docker Desktop and re-run.' }
 
 $sdk = (dotnet --version).Trim()
