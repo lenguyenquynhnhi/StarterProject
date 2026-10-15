@@ -26,7 +26,11 @@
   </ItemGroup>
   <Target Name="HuskyRestore" BeforeTargets="Restore;CollectPackageReferences"
         Condition="'$(HUSKY)' != '0'">
-    <Exec Command="dotnet tool restore" StandardOutputImportance="Low" />
-    <Exec Command="dotnet husky install" StandardOutputImportance="Low" />
+    <Exec Command="dotnet tool restore"
+          WorkingDirectory="$(MSBuildProjectDirectory)/../.."
+          StandardOutputImportance="Low" />
+    <Exec Command="dotnet husky install"
+          WorkingDirectory="$(MSBuildProjectDirectory)/../.."
+          StandardOutputImportance="Low" />
   </Target>
 </Project>
