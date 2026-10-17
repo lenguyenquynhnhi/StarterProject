@@ -1,0 +1,9 @@
+# Every file needs a review from someone on the team
+*                        @ctphu @lenguyenquynhnhi
+
+# Domain rules are the most dangerous thing to get wrong
+/src/DevOpsLab.Domain/   @ctphu
+
+# Pipeline and repository configuration
+/.github/                @lenguyenquynhnhi
+/.husky/                 @lenguyenquynhnhi
